@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const taskList = require('./Develop/db/db.json')
+const taskList = require('./db/db.json')
 
 const PORT = process.env.port || 3003;
 
@@ -16,6 +16,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/notes.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}.`)
