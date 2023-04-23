@@ -3,7 +3,6 @@ const path = require('path');
 
 // const taskList = require('./db/db.json')
 const api = require('./routes/index.js');
-
 const PORT = process.env.port || 3003;
 
 const app = express();
@@ -18,19 +17,19 @@ app.use(express.static('public'))
 
 // GET Route for homepage
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 // GET Route for notes page
 app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/notes.html'));
+    res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
 // app.get('/api/notes', (req, res) => res.json((taskList)));
 
 // Wildcard route to direct users to a 404 page
 app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/index.html'))
+    res.sendFile(path.join(__dirname, './public/index.html'))
 );
 
 
