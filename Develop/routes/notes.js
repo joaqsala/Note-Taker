@@ -14,6 +14,23 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+    const selectID = req.params.id;
+    fs.readFile(path.join(__dirname,'../db/db.json'), (err, data) => {
+        if (err) {
+            throw err;
+        } else {
+            const response = JSON.parse(data);
+            const note = response.find(item => item.id === selectID);
+            if (note){
+                res.send(note);
+            } else {
+                res.status(404).send('Note not found')
+            }
+        }
+    });
+});
+
 // POST Route for adding a note
 router.post('/', (req, res) => {
     // Destructuring assignment for the items in req.body
@@ -25,7 +42,7 @@ router.post('/', (req, res) => {
         const newNote = {
         title,
         text,
-        note_id: uuidv4(),
+        id: uuidv4(),
     };
 
     readAndAppend(newNote);

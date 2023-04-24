@@ -10,7 +10,7 @@ const app = express();
 //Middleware for express to retrieve posted data and handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/api', api);
+app.use('/api/notes', api);
 
 //used to publish contents of the static folder
 app.use(express.static('public'))
