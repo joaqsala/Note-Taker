@@ -5,14 +5,14 @@ const fs = require('fs')
 const path = require('path')
 
 
-// GET Route for retrieving all the notes
 router.get('/', (req, res) => {
-    const data = fs.readFileSync(path.join(__dirname,'../db/db.json'))
-    const  taskList = JSON.parse(data)
-    // Send a message to the client
-    res.status(200).json((taskList));
+    fs.readFile(path.join(__dirname,'../db/db.json'), (err, data) => {
+        if (err) throw err;
+        const taskList = JSON.parse(data)
+        // Send a message to the client
+        res.status(200).json((taskList));
+    });
 });
-
 
 // POST Route for adding a note
 router.post('/', (req, res) => {
@@ -72,23 +72,47 @@ router.post('/', (req, res) => {
 });
 
 
+// // POST Route for adding a note
+// router.delete('/:id', (req, res) => {
+//     const deleteNoteID = req.params.id;
+//     const data = fs.readFileSync(path.join(__dirname, '../db/db.json'));
+//     const notes = JSON.parse(data);
+
+//     for (let i = 0; i < notes.length; i++) {
+//         if(notes[i].note_id === deleteNoteID) {
+//             notes.splice(i, 1);
+//             fs.writeFileSync(path.join(__dirname, '../db/db.json'), JSON.stringify(notes));
+//             return res.status(200).send('Note deleted')
+//         }
+//     }
+//     res.status(404).json('Note ID not found');
+//     }
+// );
 // POST Route for adding a note
 router.delete('/:id', (req, res) => {
-    for 
-    if (req.body && req.params.review_id) {
-        console.info(`${req.method} request received to upvote a review`);
-        const reviewId = req.params.review_id;
-        for (let i = 0; i < reviews.length; i++) {
-          const currentReview = reviews[i];
-          if (currentReview.review_id === reviewId) {
-            currentReview.upvotes += 1;
-            res.status(200).json(`New upvote count is: ${currentReview.upvotes}!`);
-            return;
-          }
-        }
-        res.status(404).json('Review ID not found');
-      }
-    });
+    const deleteNoteID = req.params.id;
 
+    fs.readFile(path.join(__dirname, '../db/db.json'), 'utf8', (err, data) => {
+        if (err) console.error(err);
+
+        const taskList = JSON.parse(data)
+
+        for (let i = 0; i < taskList.length; i++) {
+            if (taskList[i].note_id === deleteNoteID) {
+                taskList.splice(i, 1);
+                fs.writeFile(path.join(__dirname, '../db/db.json'), JSON.stringify(taskList), (err) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json('Internal Server Error');
+                    }
+                    return res.status(200).send('Note deleted');
+                });
+                return;
+            }
+        }
+
+        res.status(404).json('Note ID not found');
+    });
+});
 
 module.exports = router;
