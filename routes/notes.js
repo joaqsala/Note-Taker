@@ -5,12 +5,14 @@ const fs = require('fs')
 const path = require('path')
 
 
+// GET Route for retrieving all the notes
 router.get('/', (req, res) => {
-    fs.readFile(path.join(__dirname,'../db/db.json'), (err, data) => {
+    fs.readFile(path.join(__dirname, '../db/db.json'), (err, data) => {
         if (err) throw err;
-        const taskList = JSON.parse(data)
+        const notesList = JSON.parse(data)
+        console.log(notesList)
         // Send a message to the client
-        res.status(200).json((taskList));
+        res.status(200).json((notesList));
     });
 });
 
@@ -43,35 +45,6 @@ router.post('/', (req, res) => {
         title,
         text,
         id: uuidv4(),
-    };
-
-    readAndAppend(newNote);
-
-    const response = {
-        status: 'success',
-        body: newNote,
-    };
-    console.log(response);
-    res.json((response));
-
-    } else {
-        res.json('Error in posting note');
-    }
-});
-
-
-// POST Route for adding a note
-router.post('/', (req, res) => {
-    // Destructuring assignment for the items in req.body
-    const { title, text } = req.body;
-
-    // If all the required properties are present
-    if (title && text) {
-      // Variable for the object we will save
-        const newNote = {
-        title,
-        text,
-        note_id: uuidv4(),
     };
 
     readAndAppend(newNote);
