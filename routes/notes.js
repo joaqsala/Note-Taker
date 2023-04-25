@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET Route for retrieving a specific note when clicked on
 router.get('/:id', (req, res) => {
     const selectID = req.params.id;
     fs.readFile(path.join(__dirname,'../db/db.json'), (err, data) => {
@@ -61,8 +62,30 @@ router.post('/', (req, res) => {
     }
 });
 
-
-// // POST Route for adding a note
+// deleting a specific note when clicked on
+router.delete('/:id', (req, res) => {
+    const deleteID = req.params.id;
+    fs.readFile(path.join(__dirname,'../db/db.json'), (err, data) => {
+        if (err) {
+            throw err;
+        } else {
+            const response = JSON.parse(data);
+            const result = response.filter(item => item.id !== deleteID);
+            if (result){
+                fs.writeFile(
+                    './db/db.json', JSON.stringify(result, null, 4), (writeErr) =>
+                        writeErr
+                        ? console.error(writeErr)
+                        : console.info('Successfully deleted note!')
+                    );
+                res.send(result);
+            } else {
+                res.status(404).send('Note not found')
+            }
+        }
+    });
+});
+// // POST Route for deleting a note
 // router.delete('/:id', (req, res) => {
 //     const deleteNoteID = req.params.id;
 //     const data = fs.readFileSync(path.join(__dirname, '../db/db.json'));
@@ -78,31 +101,6 @@ router.post('/', (req, res) => {
 //     res.status(404).json('Note ID not found');
 //     }
 // );
-// POST Route for adding a note
-router.delete('/:id', (req, res) => {
-    const deleteNoteID = req.params.id;
 
-    fs.readFile(path.join(__dirname, '../db/db.json'), 'utf8', (err, data) => {
-        if (err) console.error(err);
-
-        const taskList = JSON.parse(data)
-
-        for (let i = 0; i < taskList.length; i++) {
-            if (taskList[i].note_id === deleteNoteID) {
-                taskList.splice(i, 1);
-                fs.writeFile(path.join(__dirname, '../db/db.json'), JSON.stringify(taskList), (err) => {
-                    if (err) {
-                        console.error(err);
-                        return res.status(500).json('Internal Server Error');
-                    }
-                    return res.status(200).send('Note deleted');
-                });
-                return;
-            }
-        }
-
-        res.status(404).json('Note ID not found');
-    });
-});
 
 module.exports = router;

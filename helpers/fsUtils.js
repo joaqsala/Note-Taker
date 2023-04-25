@@ -16,7 +16,7 @@ fs.readFile('./db/db.json', 'utf8', (err, data) => {
         './db/db.json', JSON.stringify(parsedNotes, null, 4), (writeErr) =>
             writeErr
             ? console.error(writeErr)
-            : console.info('Successfully updated reviews!')
+            : console.info('Successfully updated note!')
         );
     }
     });
