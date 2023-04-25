@@ -85,22 +85,6 @@ router.delete('/:id', (req, res) => {
         }
     });
 });
-// // POST Route for deleting a note
-// router.delete('/:id', (req, res) => {
-//     const deleteNoteID = req.params.id;
-//     const data = fs.readFileSync(path.join(__dirname, '../db/db.json'));
-//     const notes = JSON.parse(data);
-
-//     for (let i = 0; i < notes.length; i++) {
-//         if(notes[i].note_id === deleteNoteID) {
-//             notes.splice(i, 1);
-//             fs.writeFileSync(path.join(__dirname, '../db/db.json'), JSON.stringify(notes));
-//             return res.status(200).send('Note deleted')
-//         }
-//     }
-//     res.status(404).json('Note ID not found');
-//     }
-// );
 
 
 module.exports = router;
