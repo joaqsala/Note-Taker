@@ -5,7 +5,7 @@
 
   ## Description
   
-  This repository contains the files for a note-taking app to make and delete notes on your to-do list. The note taker app utilizes node and express to make a non-static application that is launched via Heroku.
+  This repository contains the files for a note-taking app to make, save, and delete notes on your to-do list. The note taker app utilizes node and express to make a non-static application that is launched via Heroku.
 
   ## Table of Contents
 
@@ -25,6 +25,8 @@ Go to https://note-taker-joaqsala.herokuapp.com/notes and get started or clone t
 ## Usage 
 
 ![Adding a note using the spaces provided](./images/screenshot-note-taking.png)
+
+Deployed Site: https://note-taker-joaqsala.herokuapp.com/notes
 
 This application makes keeping track of your to-do list a breeze. Simply open the app and enter a name for your note. Provide any additional information desired to make your note complete, and then click the save button on the top right. Your note will be transferred to the left-hand side for easy viewing. Enter as many notes as you need, and then click on the trashcan icon once the to-do is tah-done!
 
